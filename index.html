@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ghibli | Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+<head>
+  ...
+  <style>
+    :root{
+      --sky:#a0d9ff; --leaf:#a5d6a7; --cream:#9ddbf6; --ink:#2b2b2b; --accent:#b7d8e3; --shadow:rgba(0,0,0,.08);
+      --card-bg: rgb(218, 244, 255);
+    }
+    /* Dark theme variables */
+    :root.dark{
+      --sky:#1b1f29; --leaf:#5d8c71; --cream:#2a2f3a; --ink:#f1f1f1; --accent:#edb157; --shadow:rgba(0,0,0,.4);
+      --card-bg: rgba(30,30,30,.85);
+    }
+
+    *{box-sizing:border-box; transition:background .3s, color .3s, border-color .3s}
+    html,body{margin:0;padding:0;background:linear-gradient(180deg,var(--sky),#f6fffb 70%);color:var(--ink);font-family:'Lora',serif;scroll-behavior:smooth}
+    body{line-height:1.6}
+    a{color:inherit}
+    .container{max-width:1100px;margin:0 auto;padding:0 1rem}
+    header{position:sticky;top:0;backdrop-filter:saturate(180%) blur(8px); background:var(--card-bg); border-bottom:1px solid #eaeaea; z-index:10; transition:.3s}
+    nav{display:flex;align-items:center;justify-content:space-between;padding:.75rem 0}
+    .brand{font-family:'Quicksand',sans-serif;font-weight:700;letter-spacing:.5px}
+    nav ul{display:flex;gap:1rem;list-style:none;margin:0;padding:0}
+    nav a{padding:.4rem .7rem;border-radius:999px}
+    nav a:hover, nav a:focus{background:var(--cream);outline:none}
+
+    /* Toggle button */
+    .theme-toggle{
+      border:none; background:var(--accent); color:#222; font-weight:600;
+      padding:.4rem .8rem; border-radius:999px; cursor:pointer; margin-left:1rem;
+      box-shadow:0 3px 8px var(--shadow);
+    }
+    .theme-toggle:hover{opacity:.9}
+
+    .hero{position:relative;min-height:70vh;display:grid;place-items:center;padding:2rem 0; text-align:center}
+    .hero h1{font-family:'Quicksand',sans-serif;font-size:clamp(2rem,6vw,3.5rem);margin:.2rem 0}
+    .tagline{font-size:1.1rem;max-width:60ch;margin:0 auto 1rem}
+    .cta{display:inline-block; padding:.8rem 1.1rem;border-radius:12px;background:var(--leaf);color:#103; font-weight:600; box-shadow:0 6px 18px var(--shadow); border:2px solid rgba(16,48,16,.08)}
+    .cta:hover{transform:translateY(-2px)}
+
+    /* Hills */
+    .hills{position:absolute;inset:auto 0 0 0;height:180px; pointer-events:none}
+    .hill{position:absolute;left:0;right:0;bottom:-1px;height:100%; background:radial-gradient(120% 120% at 20% 100%, #b7e4c7 0, #a5d6a7 60%, transparent 61%), radial-gradient(120% 120% at 80% 110%, #c8e6c9 0, #a5d6a7 60%, transparent 61%);} 
+    .dark .hill{background:radial-gradient(120% 120% at 20% 100%, #030403 0, #111b16 60%, transparent 61%), radial-gradient(120% 120% at 80% 110%, #0b120e 0, #17261e 60%, transparent 61%)}
+
+    .hill::after{content:"";position:absolute;left:-5%;right:-5%;bottom:-1px;height:140px;background:radial-gradient(100% 100% at 10% 100%, #d0f0d8 0, #bde5c3 60%, transparent 61%), radial-gradient(100% 100% at 70% 110%, #d7f7d1 0, #bde5c3 60%, transparent 61%);opacity:.8}
+    .dark .hill::after{background:radial-gradient(100% 100% at 10% 100%, #111714 0, #15201a 60%, transparent 61%), radial-gradient(100% 100% at 70% 110%, #080c0a 0, #122018 60%, transparent 61%)}
+
+    /* Floating leaves */
+    .leaf{position:absolute;width:26px;height:26px; background:radial-gradient(circle at 30% 30%, #d1ffce 0 30%, #8ccf8f 31% 100%); border-radius:60% 40% 60% 40%/50% 70% 30% 50%; opacity:.75; animation:float var(--dur,12s) linear infinite; filter:drop-shadow(0 4px 8px var(--shadow))}
+    .dark .leaf{background:radial-gradient(circle at 30% 30%, #7bb68a 0 30%, #4f7a5b 31% 100%)}
+    .leaf::after{content:""; position:absolute; inset:4px 8px auto auto; width:8px; height:8px; background:#6aa96f; border-radius:50%}
+
+    @keyframes float{
+      0%{transform:translateY(0) rotate(0deg)}
+      50%{transform:translateY(-40vh) rotate(180deg)}
+      100%{transform:translateY(0) rotate(360deg)}
+    }
+
+    .section{padding:80px 0;background:transparent}
+    .card{background:var(--card-bg); border:1px solid #eee; border-radius:18px; padding:1rem; box-shadow:0 10px 24px var(--shadow)}
+    .dark .card{border-color:#444}
+    .grid{display:grid; gap:1rem}
+    .two{grid-template-columns:1.1fr; }
+    @media(min-width:800px){ .two{grid-template-columns: 1.1fr .9fr} }
+    .projects{grid-template-columns: repeat(auto-fit, minmax(260px,1fr))}
+    .project-card img{width:100%;height:160px;object-fit:cover;border-radius:12px}
+    .badge{display:inline-block; background:var(--cream); padding:.2rem .5rem; border-radius:8px; font-size:.8rem; margin-right:.3rem}
+    label{font-weight:600}
+    input, textarea{width:100%;padding:.8rem;border:1px solid #ddd;border-radius:12px;background:#fff}
+    .dark input, .dark textarea{background:#2d3440; border:1px solid #555; color:var(--ink)}
+    button{padding:.9rem 1.1rem;border:none;border-radius:12px;background:var(--accent);font-weight:700;cursor:pointer}
+    footer{padding:2rem 0;text-align:center;opacity:.8}
+
+    .reveal{opacity:0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease}
+    .reveal.visible{opacity:1; transform: none}
+
+    @media (prefers-reduced-motion: reduce){
+      *{animation:none !important; transition:none !important; scroll-behavior:auto}
+    }
+  </style>
+</head>
+<body>
+  <header>
+  <div class="container">
+    <nav>
+      <div class="brand">Ghibli Portfolio</div>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <!-- 🌙 Dark Mode Toggle Button -->
+      <button class="theme-toggle" id="theme-toggle">🌙</button>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+  <section class="hero">
+    <div class="container reveal">
+      <h1>Hi, I’m Totoro</h1>
+      <p class="tagline">Aspiring developer who loves cozy, nature‑inspired design and building delightful web experiences.</p>
+      <a class="cta" href="#projects">See my work</a>
+    </div>
+    <div class="hills">
+      <div class="hill"></div>
+    </div>
+    <!-- floating leaves -->
+    <div class="leaf" style="left:10%; bottom:0; --dur:14s;"></div>
+    <div class="leaf" style="left:30%; bottom:0; --dur:18s;"></div>
+    <div class="leaf" style="left:55%; bottom:0; --dur:16s;"></div>
+    <div class="leaf" style="left:80%; bottom:0; --dur:20s;"></div>
+  </section>
+
+  <section id="about" class="section">
+    <div class="container grid two">
+      <div class="card reveal">
+        <h2>About</h2>
+        <p>
+            Hi, I’m Totoro! 🌸 An aspiring IT explorer, learning my way through the world of technology. 
+            I love creating little tools that make communication and organization feel as smooth as a gentle breeze. 
+            I’m on a journey to bring ideas to life—one small magical project at a time. ✨
+          </p>          
+        <p><span class="badge">HTML</span><span class="badge">CSS</span><span class="badge">JavaScript</span></p>
+      </div>
+      <div class="reveal">
+        <!-- optional profile image -->
+        <div class="card" style="text-align:center">
+          <img src="images/totoro.jpg" alt="Totoro" style="width:100%; height:auto; border-radius:12px">
+          <p style="margin-top:.5rem; font-size:.9rem; opacity:.8">Where ideas grow into magical solutions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="section">
+    <div class="container">
+      <h2 class="reveal">Projects</h2>
+      <div class="grid projects">
+        <article class="card project-card reveal">
+          <img src="https://picsum.photos/seed/project1/800/400" alt="Project preview">
+          <h3>Project One</h3>
+          <p>Short one‑sentence description of what it does and why you built it.</p>
+          <p><a href="#" target="_blank" rel="noopener">Live Demo</a> · <a href="#" target="_blank" rel="noopener">Code</a></p>
+        </article>
+        <article class="card project-card reveal">
+          <img src="https://picsum.photos/seed/project2/800/400" alt="Project preview">
+          <h3>Project Two</h3>
+          <p>Another mini app or website. Focus on simple, polished details.</p>
+          <p><a href="#" target="_blank" rel="noopener">Live Demo</a> · <a href="#" target="_blank" rel="noopener">Code</a></p>
+        </article>
+        <article class="card project-card reveal">
+          <img src="https://picsum.photos/seed/project3/800/400" alt="Project preview">
+          <h3>Project Three</h3>
+          <p>Brief description. Mention tech used.</p>
+          <p><a href="#" target="_blank" rel="noopener">Live Demo</a> · <a href="#" target="_blank" rel="noopener">Code</a></p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section">
+    <div class="container grid two">
+      <div class="card reveal">
+        <h2>Contact</h2>
+        <p>Have an opportunity or want to say hi? Send me a note.</p>
+        <form id="contact-form" action="#" method="post" novalidate>
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" required placeholder="Your Name">
+
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required placeholder="you@example.com">
+
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" required placeholder="What would you like to build?"></textarea>
+
+          <button type="submit">Send</button>
+          <p id="form-status" role="status" aria-live="polite" style="margin:.5rem 0 0; font-size:.9rem;"></p>
+        </form>
+        <p style="font-size:.9rem; opacity:.8">Tip: to receive emails without a backend, replace the form <code>action</code> with a service like <code>https://formsubmit.co/YOUR_EMAIL</code> (see guide).</p>
+      </div>
+      <div class="reveal">
+        <div class="card">
+          <h3>Links</h3>
+          <ul>
+            <li><a href="#">GitHub</a></li>
+            <li><a href="https://www.linkedin.com/in/monica-tagalag-0a7b1934a/">LinkedIn</a></li>
+            <li><a href="mailto:you@example.com">Email</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <small>© <span id="year"></span> Totoro · Ghibli‑Inspired Personal Site.</small>
+    </div>
+  </footer>
+
+    <script>
+    // reveal on scroll
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    },{threshold:0.1});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+    // set year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // basic client-side validation + demo send
+    document.getElementById('contact-form').addEventListener('submit', function(e){
+      e.preventDefault();
+      const status = document.getElementById('form-status');
+      if(!this.checkValidity()){
+        status.textContent = 'Please complete all fields correctly.';
+        return;
+      }
+      status.textContent = 'Thanks! This demo form does not send yet.';
+      this.reset();
+    });
+
+    // 🌙 Dark Mode Toggle
+    const toggle = document.getElementById('theme-toggle');
+    toggle.addEventListener('click', ()=>{
+      document.documentElement.classList.toggle('dark');
+      toggle.textContent = document.documentElement.classList.contains('dark') ? '☀️' : '🌙';
+    });
+  </script>
+</body>
+</html>
